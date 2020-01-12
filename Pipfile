@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 zappa = "*"
+boto3 = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
