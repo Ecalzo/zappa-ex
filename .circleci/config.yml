@@ -1,5 +1,16 @@
 version: 2
 jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+      - image: circleci/python:3.6.1
+    steps:
+      - run:
+          name: install dependencies
+          command: |
+            python3 install pipenv
+            pipenv install
   # build job omitted for brevity
   deploy:
     docker:
@@ -10,8 +21,14 @@ jobs:
           name: Install zappa
           command: pip install zappa
       - run:
+          name: Install pipenv
+          command: pip install pipenv
+      - run:
+          name: Install dependencies
+          command: pipenv install
+      - run:
           name: Deploy to aws with zappa, try to update if exists
-          command: zappa update dev || zappa deploy dev
+          command: pipenv run zappa update dev || pipenv run zappa deploy dev
 
 workflows:
   version: 2
