@@ -28,8 +28,9 @@ jobs:
   deploy:
     docker:
       - image: circleci/python:3.7-stretch
-    working_directory: ~/circleci-docs
+    working_directory: ~/zappa-ex
     steps:
+      - checkout
       - run:
           name: Install zappa
           command: pip install zappa
