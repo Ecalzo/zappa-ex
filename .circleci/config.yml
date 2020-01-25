@@ -30,7 +30,10 @@ jobs:
           command: pipenv install
       - run:
           name: Deploy to aws with zappa, try to update if exists
-          command: pipenv run zappa update dev || pipenv run zappa deploy dev
+          command: ls
+      # - run:
+      #     name: Deploy to aws with zappa, try to update if exists
+      #     command: pipenv run zappa update dev || pipenv run zappa deploy dev
 
 workflows:
   version: 2
