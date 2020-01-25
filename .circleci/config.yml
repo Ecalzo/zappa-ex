@@ -5,9 +5,12 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    working_directory: ~/zappa-ex
 
     steps:
+      - checkout
+      - restore_cache:  # ensure this step occurs *before* installing dependencies
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           name: install dependencies
           command: |
@@ -16,6 +19,12 @@ jobs:
             pip install --upgrade pip
             pip install pipenv
             pipenv install
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.6/site-packages"
   deploy:
     docker:
       - image: circleci/python:3.7-stretch
@@ -31,11 +40,11 @@ jobs:
           name: Install dependencies
           command: pipenv install
       - run:
-          name: Deploy to aws with zappa, try to update if exists
+          name: show contents
           command: ls
-      # - run:
-      #     name: Deploy to aws with zappa, try to update if exists
-      #     command: pipenv run zappa update dev || pipenv run zappa deploy dev
+      - run:
+          name: Deploy to aws with zappa, try to update if exists
+          command: pipenv run zappa update dev || pipenv run zappa deploy dev
 
 workflows:
   version: 2
