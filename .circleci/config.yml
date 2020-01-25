@@ -9,8 +9,6 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:  # ensure this step occurs *before* installing dependencies
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           name: install dependencies
           command: |
@@ -19,12 +17,6 @@ jobs:
             pip install --upgrade pip
             pip install pipenv
             pipenv install
-      - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.6/site-packages"
   deploy:
     docker:
       - image: circleci/python:3.7-stretch
