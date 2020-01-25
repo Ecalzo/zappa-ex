@@ -1,6 +1,7 @@
 {
     "dev": {
         "s3_bucket": "zappa-ex",
-        "app_function": "zappa_ex.my_app.app"
+        "app_function": "zappa_ex.my_app.app",
+        "aws_region": "us-east-2"
     }
 }
