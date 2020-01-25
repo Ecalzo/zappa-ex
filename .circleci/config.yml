@@ -23,15 +23,6 @@ jobs:
     working_directory: ~/zappa-ex
     steps:
       - checkout
-      - run:
-          name: Install zappa
-          command: pip install zappa
-      - run:
-          name: Install pipenv
-          command: pip install pipenv
-      - run:
-          name: Install dependencies
-          command: pipenv install
       # automatically retrieves aws_key and secret from env variables
       # https://romandc.com/zappa-django-guide/aws_credentials/
       # set these for your project in CircleCI
