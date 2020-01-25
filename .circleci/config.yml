@@ -32,9 +32,9 @@ jobs:
       - run:
           name: Install dependencies
           command: pipenv install
-      - run:
-          name: show contents
-          command: ls
+      # automatically retrieves aws_key and secret from env variables
+      # https://romandc.com/zappa-django-guide/aws_credentials/
+      # set these for your project in CircleCI
       - run:
           name: Deploy to aws with zappa, try to update if exists
           command: pipenv run zappa update dev || pipenv run zappa deploy dev
